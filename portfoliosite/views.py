@@ -308,6 +308,8 @@ def jobs(request):
 
     return render(request, 'jobs.html', context)
 
+import os
+
 
 @user_passes_test(lambda u: u.is_superuser)
 def delete_reports(request, worker_id):
@@ -320,6 +322,7 @@ def delete_reports(request, worker_id):
             # Update the status of the report to "queued"
             report_instance.status = 'queued'
             report_instance.save()  # Save the changes to the database
+
             # Delete the report
             report.delete()
 
@@ -657,12 +660,19 @@ def update_user_report(request, report_id, action=None):
 def delete_user_report(request, report_id):
     report = get_object_or_404(Report, id=report_id)
     if request.method == 'POST':
+        # Delete associated images if they exist
+        if report.garbage_image:
+            report.garbage_image.delete()
+        if report.street_image:
+            report.street_image.delete()
+
         report.delete()
         if request.user.is_staff:  # Check if the user is an admin
             return redirect('admin_report_list')  # Redirect to admin_report_list if admin
         else:
             return redirect('user_report_list')  # Redirect to user_report_list for non-admin users
     return render(request, 'delete_user_report.html', {'report': report})
+
 
 
 @login_required

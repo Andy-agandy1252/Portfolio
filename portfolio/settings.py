@@ -36,7 +36,7 @@ LOGIN_REDIRECT_URL = 'street_maintenance'  # Change this to your desired URL nam
 # Application definition
 
 INSTALLED_APPS = [
-
+    'django_cleanup.apps.CleanupConfig',
     'portfoliosite',
     'django.contrib.admin',
     'django.contrib.auth',

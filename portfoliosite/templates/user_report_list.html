@@ -5,7 +5,6 @@
 {% block content %}
 {% load static %}
 
-
 <h1>Your Reports</h1>
 <div id="map" data-city="{{ profile.city }}" data-country="{{ profile.country }}" style="width: 100%; height: 500px; margin-top: 50px;"></div>
 
@@ -32,7 +31,7 @@
         </div>
         <div style="flex-shrink: 0; display: flex; align-items: center; margin-top:-20px; margin-right:25px;">
             {% if report.status == 'queued' %}
-                <!-- Display update link only if the status is 'queued' -->
+                <!-- Display update and delete links if the status is 'queued' -->
                 <a href="{% url 'update_user_report' report.id %}" style="margin-right: 5px; text-decoration: none;">
                     <button style="height: 25px; display: flex; align-items: center; justify-content: center;">Update</button>
                 </a>
@@ -40,15 +39,13 @@
                     {% csrf_token %}
                     <button type="submit" style="height: 25px; display: flex; align-items: center; justify-content: center;">Delete</button>
                 </form>
-                <a href="{% url 'user_report_details' report.id %}" style="margin-left: 5px; text-decoration: none;">
-                    <button style="height: 25px; display: flex; align-items: center; justify-content: center;">Details</button>
-                </a>
             {% endif %}
+            <a href="{% url 'user_report_details' report.id %}" style="margin-left: 5px; text-decoration: none;">
+                <button style="height: 25px; display: flex; align-items: center; justify-content: center;">Details</button>
+            </a>
         </div>
     </div>
     <hr>
 {% endfor %}
-
-
 <script src="{% static 'js/script_for_user_report_list.js' %}"></script>
 {% endblock %}
