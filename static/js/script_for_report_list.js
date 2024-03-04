@@ -59,6 +59,7 @@ function addMarkersForReports() {
         var reportZipcode = element.getAttribute('data-zipcode');
         var reportCountry = element.getAttribute('data-country');
         var reportIssueType = element.getAttribute('data-issue-type');
+        var reportStatus = element.getAttribute('data-status');
         var reportUrl = element.getAttribute('data-url');
 
         if (!isNaN(reportCoordinates[0]) && !isNaN(reportCoordinates[1])) {
@@ -66,8 +67,10 @@ function addMarkersForReports() {
             reportMarker.bindPopup(
                 `<strong>Location:</strong> ${reportStreet} ${reportHouseNumber}, ${reportCity}, ${reportZipcode}, ${reportCountry}<br>
                 <strong>Issue Type:</strong> ${reportIssueType}<br>
+                <strong>Status:</strong> ${reportStatus}<br>
                 <a href="${reportUrl}">View Details</a>`
-            ); // Customize the popup content
+            );
+ // Customize the popup content
         }
     });
 }

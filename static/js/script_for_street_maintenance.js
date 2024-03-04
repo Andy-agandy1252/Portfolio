@@ -65,6 +65,7 @@ function addMarkersForReports(reports) {
             marker.bindPopup(
                 `<strong>Location:</strong> ${report.street} ${report.house_number}, ${report.city}, ${report.zipcode}, ${report.country}<br>
                 <strong>Issue Type:</strong> ${report.issue_type}<br>
+                <strong>Status:</strong> ${report.status}<br>
                 <a href="${report.url}">View Details</a>` // This should work if report.url is set correctly
             ); // Customize the popup content
         }
