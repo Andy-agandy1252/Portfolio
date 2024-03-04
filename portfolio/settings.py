@@ -18,19 +18,18 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-<<<<<<< HEAD
+
 ALLOWED_HOSTS = ['*']
 # CSRF_TRUSTED_ORIGINS = [
 #     'https://portfolio-dev-bjrj.2.ie-1.fl0.io',
 #     'https://andrejagarin.com',
 #     'https://*.andrejagarin.com',
 # ]
-=======
-ALLOWED_HOSTS = ['portfolio-dev-mqzm.2.ie-1.fl0.io']
+
 CSRF_TRUSTED_ORIGINS = [
     'https://portfolio-dev-mqzm.2.ie-1.fl0.io'
 ]
->>>>>>> 079ab71c2c044c8569e12975d6eb6ca7f9b2bbad
+
 LOGIN_REDIRECT_URL = 'street_maintenance'  # Change this to your desired URL name
 
 
