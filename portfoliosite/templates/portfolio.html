@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% block "content" %}
+{% load static %}
+<section id="home">
+    <div class="gallery-container">
+        <div class="gallery">
+            <div class="desc">
+                <p>Hello!</p>
+                <h1><span class="highlight-im">I'm</span> <span class="highlight-name">{{first_name}} {{last_name}}</span></h1>
+                <p class="about-me">{{about_me}}</p>
+                <p>
+  <a href="" onclick="scrollToSection('contact', event)" class="inactive button-link home-scroll">Hire me</a>
+  <a href="" onclick="scrollToSection('projects', event)" class="inactive button-link home-scroll">My projects</a>
+                </p>
+            </div>
+        </div>
+        <div class="gallery">
+            <img src="{% static 'images/7.png' %}" alt="Image 7">
+        </div>
+    </div>
+</section>
+<section id="about">
+            <div class="gallery-container">
+                <div class="gallery">
+                    <img src="{% static 'images/6.png' %}" alt="Image 6">
+                </div>
+                <div class="gallery">
+                    <div class="desc">
+                        <h1>About Me</h1>
+                        <div class="about-details">
+                            <p><strong>Name:</strong>{{first_name}} {{last_name}}</p>
+                            <p><strong>Date of Birth:</strong> {{date_of_birth}}</p>
+                            <p><strong>Address:</strong> {{address}}</p>
+                            <p><strong>Zip Code:</strong> {{zip_code}}</p>
+                            <p><strong>Email:</strong> {{email}}</p>
+                            <p><strong>Phone:</strong> {{phone}}</p>
+                        </div>
+                        <div class="about-details">
+                            <a href="" onclick="scrollToSection('projects', event)" class="inactive button-link home-scroll">My projects</a>
+                            <a href="{% static 'images/lebenslauf.pdf' %}" download="Lebenslauf.pdf" class="inactive button-link home-scroll">Download CV</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</section>
+<section id="resume">
+        <div class="resume-content">
+            <h1>Resume</h1>
+            <p>
+                Just as the wise ruler governs with prudence, the backend developer administers their servers with sagacity, orchestrating a symphony of data that echoes the harmonious balance between performance and security.
+            </p>
+            <div class="resume-details">
+                {% for entry in resume_data %}
+                <div class="resume-box">
+                    <table>
+                        <tr>
+                            <td><strong>Year:</strong></td>
+                            <td>{{ entry.year }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Level:</strong></td>
+                            <td>{{ entry.degree }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Learning institution:</strong></td>
+                            <td>{{ entry.university }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Short description:</strong></td>
+                            <td>{{ entry.short_description }}</td>
+                        </tr>
+                    </table>
+                    <!-- Inside your 'kourse_certificate.html' template -->
+<a href="{% url 'kourse_certificate' image_number=entry.image_number %}" class="inactive button-link home-scroll">Open certificate</a>
+
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+</section>
+<section id="skills">
+            <h1>Skills</h1>
+            <p>
+                Here are some of the key skills I possess:
+            </p>
+            <div class="skills-list">
+                <ul>
+                    {% for skill, percentage in skills_data.items %}
+                        <li>
+                            <div class="skills-box">
+                                <table>
+                                    <tr>
+                                        <td><strong>{{ skill }}:</strong></td>
+                                        <td>{{ percentage }}%</td>
+                                    </tr>
+                                </table>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: {{ percentage }}%;" aria-valuenow="{{ percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </li>
+                        {% if forloop.counter|divisibleby:2 %}
+                            </ul><ul>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+
+</section>
+    <section id="projects">
+            <h1>Projects</h1>
+            <p>
+                Here are my Projects:
+            </p>
+            <div class="project-images">
+                <a href="{% url 'street_maintenance' %}" class="project-link">
+                    <div class="image-overlay">
+                        <img src="{% static 'images/1.jpg' %}" alt="Project 1" class="project-image">
+                        <div class="text-overlay">
+                            <div class="text">Simple Project</div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://github.com/Andy-agandy1252?tab=repositories" class="project-link" target="_blank">
+                    <div class="image-overlay">
+                        <img src="{% static 'images/2.jpg' %}" alt="Project 2" class="project-image">
+                        <div class="text-overlay">
+                            <div class="text">GitHub Repository</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+    </section>
+<section id="contact">
+            <h1>Contact Me</h1>
+            <div class="gallery-container">
+                <div class="gallery">
+                    <img src="{% static 'images/3.jpg' %}" alt="Image 3">
+                    <div class="desc">
+                        <h2>ADDRESS</h2>
+                        <p>{{address}}, {{zip_code}}</p>
+                    </div>
+                </div>
+                <div class="gallery">
+                    <img src="{% static 'images/4.jpg' %}" alt="Image 4">
+                    <div class="desc">
+                        <h2>EMAIL ADDRESS</h2>
+                        <p>{{email}}</p>
+                    </div>
+                </div>
+                <div class="gallery">
+                    <img src="{% static 'images/5.jpg' %}" alt="Image 5">
+                    <div class="desc">
+                        <h2>CONTACT NUMBER</h2>
+                        <p>{{phone}}</p>
+                    </div>
+                </div>
+            </div>
+            <h3>Have any questions? Or want to hire me? You can contact me :)</h3>
+            <div class="contact-form">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject:</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary button-link contact-form-button">Send Message</button>
+                </form>
+            </div>
+</section>
+{% endblock %}

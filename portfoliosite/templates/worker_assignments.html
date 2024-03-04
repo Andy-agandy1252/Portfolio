@@ -1,0 +1,40 @@
+<!-- worker_assignments.html -->
+
+{% extends 'admin_base.html' %}
+
+{% block content %}
+<a href="{% url 'street_maintenance_admin' %}">Admin page</a>
+<a href="{% url 'worker_list' %}">Worker list</a>
+<a href="{% url 'update_job' worker.id %}">Update Job</a>
+  <h1>Worker Assignments</h1>
+  <h2>Worker: {{ worker.user_profile.user.username }}</h2>
+  <h2>Status: {{ worker.status }}</h2>
+  <h2>City: {{ worker.user_profile.city }}</h2>
+  <h2>Country: {{ worker.user_profile.country }}</h2>
+
+  <h2>Cities:</h2>
+  <ul>
+    {% for city in cities %}
+      <li><a href="{% url 'worker_assignments' worker.id %}?city={{ city }}">{{ city }}</a></li>
+    {% endfor %}
+  </ul>
+
+<form method="post" action="{% url 'save_selected_reports' worker.id %}">
+  {% csrf_token %}
+  <h2>Queued Reports:</h2>
+  {% if queued_reports %}
+    <ul>
+      {% for report in queued_reports %}
+        <li>
+          <input type="checkbox" name="selected_reports" value="{{ report.id }}">
+          {{ report.street }} - {{ report.city }}
+        </li>
+      {% endfor %}
+    </ul>
+    <button type="submit">Save Selected Reports</button>
+  {% else %}
+    <p>No queued reports available for {{ selected_city }}</p>
+  {% endif %}
+</form>
+
+{% endblock %}

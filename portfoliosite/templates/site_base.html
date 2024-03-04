@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Maintenance</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- Include Leaflet Control Geocoder plugin -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style_for_project.css' %}">
+</head>
+<body>
+    <nav>
+        <div class="navbar">
+            <a href="{% url 'street_maintenance' %}">Home</a>
+            {% if user.is_authenticated %}
+                {% if not user.is_superuser %}
+                    <a href="{% url 'report_list' %}">View All Reports</a>
+                {% endif %}
+                {% if not user.is_superuser %}
+                    <a href="{% url 'user_report_list' %}">View my Reports</a>
+                {% endif %}
+                <!-- Create report dropdown -->
+                <div class="dropdown">
+                    <button class="dropbtn">Create Report</button>
+                    <div class="dropdown-content">
+                        <a href="{% url 'create_report' %}?issue_type=garbage">Garbage</a>
+                        <a href="{% url 'create_report' %}?issue_type=graffiti">Graffiti</a>
+                        <a href="{% url 'create_report' %}?issue_type=other">Other</a>
+                    </div>
+                </div>
+                <span>Welcome<a href="{% url 'user_profile' %}">{{ user.username }}</a></span>
+                <span> Your city is {{ user.userprofile.city }}</span>
+                <a href="{% url 'logout' %}">Log Out</a>
+                {% if user.is_superuser %}
+                    <a href="{% url 'street_maintenance_admin' %}">Admin Panel</a>
+                {% else %}
+                    {% if user.userprofile.worker.is_worker %}
+                        <a href="{% url 'worker_panel' %}">Worker Panel</a>
+                    {% endif %}
+                {% endif %}
+            {% else %}
+                <a href="{% url 'report_list' %}">View All Reports</a>
+                <a href="{% url 'login' %}">Create report</a>
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

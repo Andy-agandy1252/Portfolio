@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load static %}
+    <!-- Your project-specific CSS -->
+    <link rel="stylesheet" href="{% static 'css/style_for_project.css' %}">
+</head>
+<body>
+    <nav>
+        <div class="navbar">
+            <a href="{% url 'street_maintenance' %}">Home</a>
+            <span>Welcome <a href="{% url 'user_profile' %}">{{ user.username }}</a></span>
+            <a href="{% url 'logout' %}">Log Out</a>
+        </div>
+    </nav>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

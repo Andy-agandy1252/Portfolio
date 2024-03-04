@@ -1,0 +1,580 @@
+body {
+    background-color: black;
+    margin: 0;
+    padding: 0;
+}
+.messages-container {
+    margin:auto;
+    font-size:30px;
+    padding-top: 100px;
+    width: 50%;
+    text-align: center;
+    color: white;
+}
+
+.fade-out {
+    color:red;
+    background-color:yellow;
+    opacity: 0;
+    transition: opacity 15s ease;
+    border-radius:20px;
+}
+
+
+.highlight-line {
+  position: fixed;
+  height: 2px;
+  /* Set the desired highlight color */
+  width: 100%;
+  z-index: 9999; /* Ensure it's on top of other elements */
+}
+
+/* Navbar fixed */
+.topnav {
+  background-color: black;
+  overflow: hidden;
+  position: fixed;
+  width: 90%; /* Change width to 80% */
+  z-index: 1000;
+  left: 10%; /* Add left property to center the topnav */
+}
+.topnav a {
+
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  border-radius:20px;
+}
+.topnav .left-links {
+
+  float: left;
+  margin-left: 100px; /* Adjusted margin */
+}
+.topnav .owner{
+font-size:30px;
+}
+.topnav .right-links {
+  float: right;
+  text-align: right;
+  margin-right: 200px;
+}
+
+.topnav a:hover {
+  background-color: yellow;
+  color: black;
+}
+.topnav a.active {
+  color: white;
+  border-bottom: 2px solid yellow;
+}
+.topnav .icon {
+  display: none;
+  color: white;
+}
+@media screen and (max-width: 1065px) {
+  .topnav {
+    position: fixed;
+    overflow: hidden;
+    z-index: 1000;
+    text-align: center;
+    left: 0; /* Adjusted left property for mobile version */
+    width: calc(100% - 200px); /* 100px padding from left and right */
+    padding: 0 100px; /* Padding added */
+  }
+  .topnav .left-links,
+  .topnav .right-links {
+    float: none;
+    width: 100%;
+    text-align: center;
+    margin-left: 0; /* Remove margin-left */
+  }
+  .topnav .inactive {
+    display: none;
+  }
+  .topnav a:not(:first-child) {
+    display: none;
+  }
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+  .topnav.responsive {
+    position: relative;
+  }
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive .left-links,
+  .topnav.responsive .right-links {
+    width: 100%;
+    text-align: center;
+    margin-left: 0; /* Remove margin-left */
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: center;
+  }
+}
+/*home Section*/
+#home {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    opacity: 0; /* Set initial opacity to 0 for the fade-in effect */
+    animation: fadeIn 1s ease-in-out forwards; /* Use the fadeIn animation */
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.gallery-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+#home .gallery {
+    position: relative;
+    text-align: center;
+    margin: 20px;
+}
+#home .gallery img {
+    width: 400px;
+    height: 500px;
+    display: block;
+    margin: 20px;
+    transition: transform 0.3s ease-in-out; /* Add a smooth transition for the hover effect */
+}
+#home .gallery img:hover {
+    transform: scale(1.1); /* Apply a scale effect on hover */
+}
+#home .desc {
+    max-width: 600px;
+    margin-top: 100px; /* Default margin-top value */
+    text-align: center;
+}
+@media screen and (max-width: 1236px) {
+    #home .desc {
+        margin-top: 0; /* Adjust margin-top for screens less than or equal to 1200px width */
+    }
+}
+#home .desc p:first-child {
+    font-size:100px;
+    color: yellow; /* Set the color for the first paragraph ("Hello!") */
+}
+#home .desc p {
+    font-size:20px;
+    color: white; /* Set the color for other paragraphs */
+}
+#home .desc .highlight-im {
+    font-size:50px;
+    color: yellow; /* Set the color for elements with the "highlight-im" class */
+}
+#home .desc .highlight-name{
+    font-size:50px;
+    color: white;
+}
+/* styles.css */
+.home-scroll{
+    background-color:yellow;
+    color:black;
+    height: 60px;
+    line-height: 100px;
+    border-radius: 20px;
+}
+.button-link {
+    font-size:30px;
+    width: 50px;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none; /* Remove underline from links */
+     /* Text color */
+}
+
+.button-link:hover {
+    background-color: purple;
+    color:black;
+    border-radius: 20px;/* Change background color on hover */
+}
+
+/* About Section*/
+#about {
+    padding-top: 100px;
+    padding-bottom:100px;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+}
+#about .desc {
+    width: 600px;
+    margin-top: 100px; /* Default margin-top value */
+    text-align: center;
+}
+#about .gallery img {
+    width: 500px;
+    height: 500px;
+    display: block;
+    margin: 20px;
+    transition: transform 0.3s ease-in-out; /* Add a smooth transition for the hover effect */
+}
+#about .gallery img:hover {
+    transform: scale(1.1); /* Apply a scale effect on hover */
+}
+#about .desc h1 {
+    font-size:50px;
+    color: yellow;
+}
+
+#about .desc p {
+    font-size:20px;
+    color: white;
+    margin-bottom: 10px;
+}
+#about .desc h1,
+.desc h2 {
+    margin-top: 10px;
+}
+#about p {
+    color: white;
+    margin: 5px 0;
+}
+.more-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.more-link:hover {
+    background-color: #0056b3;
+}
+@media screen and (max-width: 1236px) {
+    #about .desc {
+        margin-top: 0; /* Adjust margin-top for screens less than or equal to 1236px width */
+    }
+    #about .gallery img {
+        display: none; /* Hide the image */
+    }
+}
+/* Resume Section */
+#resume {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.resume-content {
+
+    color: white;
+    text-align: center;
+}
+.resume-content h1 {
+    font-size:50px;
+    color: yellow;
+}
+.resume-content p {
+
+    margin-bottom: 50px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size:20px;
+}
+.resume-details {
+
+    display: flex;
+    flex-wrap: wrap; /* Allow boxes to wrap to the next line on smaller screens */
+    justify-content: center; /* Center the boxes horizontally */
+}
+.resume-box {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 10px;
+    width: 400px;
+}
+.resume-box table {
+    width: 100%;
+    color: white;
+}
+.resume-box table td {
+font-size:20px;
+    padding: 10px;
+}
+/*------------------------------------------*/
+@media screen and (max-width: 800px) {
+    .resume-box {
+        width: 100%; /* Set the width to 100% on smaller screens */
+    }
+    #resume  {
+        margin-left:50px;
+        margin-right:50px;
+    }
+}
+/* Skills Section */
+#skills {
+    padding-top:50px;
+    color: white;
+    text-align: center;
+}
+#skills h1 {
+    font-size:50px;
+    color: yellow;
+}
+#skills p {
+    margin-bottom: 20px;
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+    font-size:20px;
+}
+#skills ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line on smaller screens */
+    justify-content: center;
+}
+.skills-box {
+
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px;
+    width: 400px;
+}
+
+.skills-box table {
+    width: 100%;
+    color: white;
+}
+.skills-box table td {
+    font-size:20px;
+    padding: 10px;
+}
+
+.progress {
+    height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: purple;
+}
+.progress-bar {
+    background-color: yellow;
+    height: 100%;
+}
+@media screen and (max-width: 550px) {
+    #skills {
+    margin-top:200px;
+    }
+    .skills-list ul {
+        width: 100%; /* Set the width to 100% for smaller screens */
+        margin:auto;
+    }
+    .skills-box  {
+        width: 250px; /* Set the width to 100% for smaller screens */
+    }
+}
+/* Projects Section */
+#projects {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    color: white;
+    text-align: center;
+}
+#projects h1 {
+    font-size: 50px;
+    color: yellow;
+}
+#projects p {
+    font-size: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    color: white;
+}
+.project-images {
+    display: flex;
+    margin: auto;
+    width: 65%;
+    flex-wrap: wrap; /* Allow project links to wrap to the next line on smaller screens */
+    justify-content: center;
+    margin-top: 20px;
+}
+.project-link {
+    position: relative;
+    margin: 20px;
+    flex: 0 0 calc(50% - 40px); /* Display two projects per row on larger screens */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.image-overlay {
+    position: relative;
+    overflow: hidden;
+}
+.project-image {
+    display: block;
+    width: 300px;
+    height: 300px;
+    width: 100%; /* Make the images fill the container */
+    height: auto; /* Maintain aspect ratio */
+    transition: transform 0.3s;
+}
+.text-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(136, 131, 1, 0.55); /* Yellow color with 50% transparency */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.project-link:hover .project-image {
+    transform: scale(1.1);
+}
+.project-link:hover .text-overlay {
+    opacity: 1;
+}
+.text {
+    color: white; /* Set the text color to black */
+    font-size: 30px;
+    padding: 16px 32px;
+    text-align: center;
+}
+@media screen and (max-width: 650px) {
+    .project-link {
+        flex: 0 0 calc(100% - 40px); /* Display one project per row on smaller screens */
+    }
+}
+/* Contackt section */
+#contact {
+    padding: 50px;
+    color: white;
+
+    text-align: center;
+}
+#contact h1 {
+margin-bottom:-20px;
+    font-size: 50px;
+    color: yellow;
+}
+#contact p {
+    margin-bottom: 10px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: 20px;
+}
+.gallery {
+    position: relative;
+}
+#contact .gallery img {
+    width: 130px;
+    height: 130px;
+    display: block;
+    border-radius: 50%;
+    margin: 50px;
+    margin-bottom:0;
+}
+.desc h2,
+.desc p {
+    margin: 0;
+    color: white;
+}
+#contact h3 {
+margin-top:30px;
+margin-background:-0px;
+font-size: 30px;
+color:yellow;
+
+}
+.contact-form label {
+    display: block;
+    margin-bottom: 10px;
+}
+.contact-form input,
+.contact-form textarea {
+    width: 60%;
+    max-width: 60%;
+    max-height:150px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+/*===========================================================*/
+/* Add this CSS */
+#contact .contact-form-button {
+    background-color: yellow;
+    width:250px;
+    font-size:30px;
+    border: none;
+    border-radius: 20px; /* Adjust the border radius to match the other buttons */
+    cursor: pointer;
+}
+
+#contact .contact-form-button:hover {
+    background-color: purple; /* Adjust the hover background color to match the other buttons */
+    color: black;
+}
+
+/*=============================================================*/
+/* Footer Section */
+footer {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+.widget p {
+    margin: 0;
+}
+footer a {
+    color: white;
+    text-decoration: none;
+}
+footer a:hover {
+    text-decoration: underline;
+}
+.footer-widgets {
+    display: flex;
+    flex-wrap: wrap; /* Allow widgets to wrap to the next line on smaller screens */
+    justify-content: center; /* Center widgets horizontally */
+}
+.widget {
+    flex: 1;
+    margin: 10px; /* Adjust margin as needed */
+    max-width: 300px; /* Set a maximum width for the widgets */
+}
+.all-rights {
+    text-align: center;
+}
+@media screen and (max-width: 600px) {
+    .footer-widgets {
+        flex-direction: column; /* Stack widgets vertically on smaller screens */
+        align-items: center; /* Center widgets vertically */
+    }
+    .widget {
+        max-width: 100%; /* Make widgets fill the available width */
+    }
+}

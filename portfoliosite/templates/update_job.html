@@ -1,0 +1,52 @@
+<!-- update_job.html -->
+{% extends 'admin_base.html' %}
+
+{% block title %}Update Job{% endblock %}
+
+{% block content %}
+<a href="{% url 'street_maintenance_admin' %}">Admin page</a>
+<a href="{% url 'jobs' %}">Jobs</a>
+<a href="{% url 'worker_assignments' worker.id %}">View Worker Assignments</a>
+  <h1>Update Job for {{ worker.user_profile.user.username }}</h1>
+  <h2>Worker: {{ worker.user_profile.user.username }}</h2>
+  <h2>Status: {{ worker.status }}</h2>
+  <h2>City: {{ worker.user_profile.city }}</h2>
+  <h2>Country: {{ worker.user_profile.country }}</h2>
+  <!-- Add your update job form here -->
+  <!-- Delete Report Forms -->
+  {% for assigned_report in worker.assignedreport_set.all %}
+    <p>Report: {{ assigned_report.report_name }}</p>
+    <form action="{% url 'delete_reports' worker.id %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="report_id" value="{{ assigned_report.id }}">
+      <button type="submit">Delete</button>
+    </form>
+  {% endfor %}
+<h2>Cities:</h2>
+<ul>
+  {% for city in cities %}
+    <li><a href="{% url 'update_job' worker.id %}?city={{ city }}">{{ city }}</a></li>
+  {% endfor %}
+</ul>
+
+<!-- Add Report Form -->
+<form action="{% url 'save_selected_reports' worker.id %}" method="post">
+  {% csrf_token %}
+  <h2>Queued Reports:</h2>
+  {% if queued_reports %}
+    <ul>
+      {% for report in queued_reports %}
+        <li>
+          <input type="checkbox" name="selected_reports" value="{{ report.id }}">
+          {{ report.street }} - {{ report.city }}
+        </li>
+      {% endfor %}
+    </ul>
+    <button type="submit">Add Selected Reports</button>
+  {% else %}
+    <p>No queued reports available for {{ worker.user_profile.city }}</p>
+  {% endif %}
+</form>
+
+
+{% endblock %}

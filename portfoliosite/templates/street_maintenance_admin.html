@@ -1,0 +1,44 @@
+{% extends 'admin_base.html' %}
+
+{% block content %}
+<h1>Admin page</h1>
+    <h2>Reports Summary</h2>
+    <p><strong>Total Reports:</strong> {{ total_reports }}</p>
+    <p><strong>Today's Reports:</strong> {{ today_reports }}</p>
+    <p><strong>Total Workers:</strong> {{ workers.count }}</p>
+    <p><strong>Archive:</strong> {{ finished_reports_count }}</p>
+    <div class="box">
+        <h2>Today's Reports Summary</h2>
+        <p><strong>Total Today's Reports:</strong> {{ today_reports }}</p>
+        <ul>
+            <li>Garbage: {{ today_garbage_reports_count }}</li>
+            <li>Graffiti: {{ today_graffiti_reports_count }}</li>
+            <li>Other: {{ today_other_reports_count }}</li>
+        </ul>
+    </div>
+    <div class="box">
+        <h2>Workers Summary</h2>
+        <p>Total Workers: {{ workers.count }}</p>
+        <ul>
+            <li>Available Workers: {{ available_workers_count }}</li>
+            <li>Works Workers: {{ works_workers_count }}</li>
+            <li>Sick Workers: {{ sick_workers_count }}</li>
+            <li>Not Working Today: {{ not_working_today_count }}</li>
+            <li>On Holiday: {{ on_holiday_count }}</li>
+            <li>Pending: {{ pending_count }}</li>
+        </ul>
+    </div>
+    <div class="box">
+    <h2>Reports In Progress</h2>
+    <p>Total Reports In Progress: {{ in_progress_reports.count }}</p>
+    <ul>
+        <li>Garbage: {{ garbage_reports_count_in_progress }}</li>
+        <li>Graffiti: {{ graffiti_reports_count_in_progress }}</li>
+        <li>Other: {{ other_reports_count_in_progress }}</li>
+    </ul>
+</div>
+    <a href="{% url 'grant_worker_status' %}">Grant Worker Status</a>
+    <a href="{% url 'worker_list' %}">Worker List</a>
+    <a href="{% url 'admin_report_list' %}">Report List</a>
+    <a href="{% url 'jobs' %}">Jobs</a>
+{% endblock %}

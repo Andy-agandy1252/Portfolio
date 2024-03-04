@@ -1,0 +1,32 @@
+{% extends 'admin_base.html' %}
+
+{% block content %}
+<a href="{% url 'street_maintenance_admin' %}">Admin page</a>
+<a href="{% url 'jobs' %}">Jobs</a>
+    <h1>Worker List</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>City</th>
+            <th>Country</th>
+            <th>Action</th>
+        </tr>
+        {% for worker in workers %}
+        <tr>
+            <td>{{ worker.user_profile.user.username }}</td>
+            <td>{{ worker.status }}</td>
+            <td>{{ worker.user_profile.city }}</td>
+            <td>{{ worker.user_profile.country }}</td>
+            <td>
+                {% if worker.status != 'sick' and worker.status != 'not_working_today' and worker.status != 'on_holiday' %}
+                    <a href="{% url 'worker_assignments' worker.id %}">Add/Update Worker's Duties</a>
+                {% else %}
+                    Worker is not available
+                {% endif %}
+                <a href="{% url 'worker_profile' worker.id %}">Worker Profile</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

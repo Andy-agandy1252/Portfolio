@@ -1,0 +1,32 @@
+<!-- admin_report_list.html -->
+{% extends 'admin_base.html' %}
+
+{% block content %}
+<a href="{% url 'street_maintenance_admin' %}">Admin page</a>
+  <h1>Report List</h1>
+  {% for report in all_reports %}
+    <div class="report" data-coordinates="{{ report.coordinates }}" data-street="{{ report.street }}"
+         data-house-number="{{ report.house_number }}" data-city="{{ report.city }}" data-zipcode="{{ report.zipcode }}"
+         data-country="{{ report.country }}" data-issue-type="{{ report.issue_type }}"
+         data-url="{% url 'report_detail' report.id %}" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0;">
+      <div style=" flex-grow: 2; margin-right: 10px;">
+        {{ report.street }} {{ report.house_number }}, {{ report.city }}, {{ report.zipcode }}, {{ report.country }}
+      </div>
+      <div style="flex-shrink: 0; margin-right: 10px; text-align: center;">
+        {{ report.status }}
+      </div>
+      <div style="flex-shrink: 0; display: flex; align-items: center;">
+        <a href="{% url 'report_detail' report.id %}" style="margin-left: 5px; text-decoration: none;">
+          <button style="margin-top: 5px; height: 25px; display: flex; align-items: center; justify-content: center;">Details</button>
+        </a>
+        <a href="{% url 'update_user_report' report.id %}" style="margin-left: 5px; text-decoration: none;">
+          <button style="margin-top: 5px; height: 25px; display: flex; align-items: center; justify-content: center;">Update</button>
+        </a>
+        <form action="{% url 'delete_user_report' report.id %}" method="post">
+          {% csrf_token %}
+          <button type="submit" style="margin-top: 5px; height: 25px; display: flex; align-items: center; justify-content: center;">Delete</button>
+        </form>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}

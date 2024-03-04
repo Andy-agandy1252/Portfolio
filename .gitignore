@@ -1,0 +1,19 @@
+.env
+# Ignore virtual environment
+venv/
+
+# Ignore database file
+db.sqlite3
+
+# Ignore PyCharm files
+.idea/
+
+# Ignore pycache
+__pycache__/
+
+# Ignore compiled Python files
+*.pyc
+*.pyo
+
+# Ignore local settings file
+local_settings.py

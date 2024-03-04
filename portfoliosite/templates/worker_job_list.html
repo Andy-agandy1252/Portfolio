@@ -1,0 +1,54 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+{% load static %}
+<a href="{% url 'worker_job' %}">Worker Job Page</a>
+    <h1>Assigned Reports</h1>
+    <h2>Map</h2>
+    <div id="map" data-city="{{ user_city }}" style="height: 400px;"></div>
+    <ul>
+        {% for assigned_report in assigned_reports %}
+            <li>
+                <h3>Report ID: {{ assigned_report.id }}</h3>
+                <p><strong>Street:</strong> {{ assigned_report.report.street }}</p>
+                <p><strong>House Number:</strong> {{ assigned_report.report.house_number }}</p>
+                <p><strong>City:</strong> {{ assigned_report.report.city }}</p>
+                <p><strong>Zipcode:</strong> {{ assigned_report.report.zipcode }}</p>
+                <p><strong>Region:</strong> {{ assigned_report.report.region }}</p>
+                <p><strong>Country:</strong> {{ assigned_report.report.country }}</p>
+                <p><strong>Commentary:</strong> {{ assigned_report.report.commentary }}</p>
+                <p><strong>Status:</strong> {{ assigned_report.report.status }}</p>
+                <p><strong>Issue Type:</strong> {{ assigned_report.report.issue_type }}</p>
+                <!-- Add a button to mark the job as finished -->
+                <form action="{% url 'mark_job_finished' assigned_report.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Job Finished</button>
+                </form>
+                <img src="{{ assigned_report.report.garbage_image.url }}" alt="Garbage Image">
+                <img src="{{ assigned_report.report.street_image.url }}" alt="Street Image">
+            </li>
+        {% endfor %}
+    </ul>
+
+{% if all_reports_finished %}
+    <form action="{% url 'mark_job_accomplished' %}" method="get">
+        <button type="submit" class="button">Job Accomplished</button>
+    </form>
+{% endif %}
+
+
+
+    <!-- Include Leaflet and Leaflet Control Geocoder libraries -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- Include Leaflet Control Geocoder plugin -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+    <!-- Include your custom script file -->
+    <script src="{% static 'js/script_for_worker_job.js' %}"></script>
+    <script>
+        var userCity = "{{ user_city }}";
+        var assignedReports = {{ assigned_reports_data|safe }};
+    </script>
+{% endblock %}

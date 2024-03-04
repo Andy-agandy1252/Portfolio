@@ -1,0 +1,40 @@
+<!-- grant_worker_status.html -->
+{% extends 'admin_base.html' %}
+
+{% block content %}
+<a href="{% url 'street_maintenance_admin' %}">Admin page</a>
+  <h2>Grant Worker Status</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.username.label_tag }}
+    {{ form.username }}
+    <button type="submit">Search User</button>
+  </form>
+
+  {% if user_found %}
+    <p>User "{{ form.username.value }}" found!</p>
+    {% if is_worker %}
+      <form method="post">
+        {% csrf_token %}
+        <!-- Hidden input to pass the username value -->
+        <input type="hidden" name="username" value="{{ form.username.value }}">
+        <button type="submit" name="revoke">Revoke Worker Status</button>
+      </form>
+    {% else %}
+      <form method="post">
+        {% csrf_token %}
+        <!-- Hidden input to pass the username value -->
+        <input type="hidden" name="username" value="{{ form.username.value }}">
+        <button type="submit" name="grant">Grant Worker Status</button>
+      </form>
+    {% endif %}
+    {% if newest_message %}
+      <p>{{ newest_message }}</p>
+    {% endif %}
+
+  {% endif %}
+
+  {% if not user_found and request.method == "POST" %}
+    <p>User not found!</p>
+  {% endif %}
+{% endblock %}

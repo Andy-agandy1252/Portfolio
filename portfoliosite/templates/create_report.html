@@ -1,0 +1,106 @@
+<!-- create_report.html -->
+{% extends 'site_base.html' %}
+
+{% block title %}Report{% endblock %}
+
+{% block content %}
+{% load static %}
+<script src="{% static 'js/script_for_create_report.js' %}"></script>
+<script>
+    // Define the user's city and country
+    var userCity = "{{ user.userprofile.city }}";
+    var userCountry = "{{ user.userprofile.country }}";
+
+    // Call the initialization function once the DOM is ready
+    document.addEventListener("DOMContentLoaded", function() {
+        initMapAndGeocoding(userCity, userCountry);
+    });
+</script>
+<!-- Add these lines in the head section of your HTML -->
+<h1>Report an Issue</h1>
+
+<h2 style="text-align: center;">please show us the location of a problem</h2>
+<form method="post" action="{% url 'create_report' %}" enctype="multipart/form-data" style="max-width: 600px; margin: auto;">
+    {% csrf_token %}
+    <div id="loading"></div>
+    <!-- Map iframe -->
+    <div id="map" style="width: 600px; height: 400px;"></div>
+    <!-- Input field for street -->
+    <div style="margin-bottom: 15px;">
+        <label for="street">Street*:</label>
+        <input type="text" id="street" name="street" required style="width: 100%;">
+    </div>
+
+    <!-- Input field for house number -->
+    <div style="margin-bottom: 15px;">
+        <label for="house_number">House Number. Not required if there is no housenumber:</label>
+        <input type="text" id="house_number" name="house_number" style="width: 100%;">
+    </div>
+
+    <!-- Input field for city -->
+    <div style="margin-bottom: 15px;">
+        <label for="city">City*:</label>
+        <input type="text" id="city" name="city" required style="width: 100%;">
+    </div>
+
+    <!-- Input field for zip code -->
+    <div style="margin-bottom: 15px;">
+        <label for="zipcode">Zip Code*:</label>
+        <input type="text" id="zipcode" name="zipcode" style="width: 100%;" required>
+    </div>
+
+    <!-- Input field for region -->
+    <div style="margin-bottom: 15px;">
+        <label for="region">Region*:</label>
+        <input type="text" id="region" name="region" style="width: 100%;" required>
+    </div>
+
+    <!-- Input field for country -->
+    <div style="margin-bottom: 15px;">
+        <label for="country">Country*:</label>
+        <input type="text" id="country" name="country" style="width: 100%;" required>
+    </div>
+
+<div style="margin-bottom: 15px;">
+    <label for="issue_type">Issue Type:</label>
+    <select id="issue_type" name="issue_type" style="width: 100%;">
+        <option value="garbage" {% if selected_option == 'garbage' %}selected{% endif %}>Garbage</option>
+        <option value="graffiti" {% if selected_option == 'graffiti' %}selected{% endif %}>Graffiti</option>
+        <option value="other" {% if selected_option == 'other' %}selected{% endif %}>Other</option>
+    </select>
+</div>
+
+
+
+
+    <button type="button" onclick="placeLocationManually()">Place Location on Map</button>
+    <button type="button" onclick="clearLocationInputs()">Clear Location Inputs</button>
+
+    <!-- Image upload button for garbage image -->
+    <div style="margin-bottom: 15px;">
+        <label for="garbage_image">Add Image with Garbage*:</label>
+        <input type="file" id="garbage_image" name="garbage_image" accept="image/*" style="width: 100%;" required>
+    </div>
+    <!-- Image upload button for street image -->
+    <div style="margin-bottom: 15px;">
+        <label for="street_image">Add Image with Street*:</label>
+        <input type="file" id="street_image" name="street_image" accept="image/*" style="width: 100%;" required>
+    </div>
+    <!-- Text field for commentary -->
+    <div style="margin-bottom: 15px;">
+        <label for="commentary">Commentary if there is some aditional information how to find the place, or you want to tell something:</label>
+        <textarea id="commentary" name="commentary" rows="4" style="width: 100%;"></textarea>
+    </div>
+
+    <!-- Input field for coordinates -->
+    <input type="hidden" id="coordinates" name="coordinates" required style="width: 100%;">
+    <!-- Hidden input for status -->
+    <input type="hidden" id="status" name="status" value="queued" required>
+
+    <!-- Submit button -->
+    <div>
+        <input type="submit" value="Submit Report" style="width: 100%;">
+    </div>
+</form>
+
+{% endblock %}

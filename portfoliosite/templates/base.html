@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ title }}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+</head>
+<body>
+<div class="highlight-line"></div>
+<div class="topnav" id="myTopnav">
+  <div class="left-links">
+    <a href="/andrejagarin.com/" class="owner">Andrej</a>
+  </div>
+  <div class="right-links">
+    <a href="" onclick="scrollToSection('home', event)" class="inactive ">Home</a>
+    <a href="" onclick="scrollToSection('about', event)" class="inactive ">About</a>
+    <a href="" onclick="scrollToSection('resume', event)" class="inactive ">Resume</a>
+    <a href="" onclick="scrollToSection('skills', event)" class="inactive ">Skills</a>
+    <a href="" onclick="scrollToSection('projects', event)" class="inactive ">Projects</a>
+    <a href="" onclick="scrollToSection('contact', event)" class="inactive ">Contact</a>
+  </div>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">Menu</a>
+
+</div>
+<div class="messages-container">
+{% if messages %}
+    <div id="successMessage" class="alert alert-success" role="alert">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+{% endif %}
+</div>
+{% block "content" %}
+{% endblock %}
+<footer>
+        <div class="footer-widgets">
+            <div class="widget">
+                <h3>About</h3>
+                <p>{{about_me_2}}</p>
+            </div>
+            <div class="widget">
+                <h3>Links</h3>
+                <p><a href="" onclick="scrollToSection('home', event)" class="inactive ">Home</a></p>
+                <p><a href="" onclick="scrollToSection('about', event)" class="inactive ">About</a></p>
+                <p><a href="" onclick="scrollToSection('resume', event)" class="inactive ">Resume</a></p>
+                <p><a href="" onclick="scrollToSection('skills', event)" class="inactive ">Skills</a></p>
+                <p><a href="" onclick="scrollToSection('projects', event)" class="inactive ">Projects</a></p>
+                <p><a href="" onclick="scrollToSection('contact', event)" class="inactive ">Contact</a></p>
+            </div>
+            <div class="widget">
+                <h3>Contact</h3>
+                <p><strong>Address:</strong> {{address}}</p>
+                <p><strong>Phone:</strong> {{phone}}</p>
+                <p><strong>Email:</strong> {{email}}</p>
+            </div>
+        </div>
+    <p class="all-rights">© 2024 All rights reserved</p>
+</footer>
+
+
+
+</body>
+</html>

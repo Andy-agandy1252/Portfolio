@@ -1,0 +1,38 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+{% load static %}
+<a href="{% url 'worker_panel' %}">Worker Panel</a>
+    <h1>Worker Job Page</h1>
+    <h2>Assigned Reports</h2>
+    <h2>User's City: {{ user_city }}</h2>
+    <ul>
+        {% for assigned_report in assigned_reports %}
+            <li>
+                <h3>{{ assigned_report.report_name }}</h3>
+                <p><strong>Street:</strong> {{ assigned_report.report.street }}</p>
+                <p><strong>House Number:</strong> {{ assigned_report.report.house_number }}</p>
+                <p><strong>City:</strong> {{ assigned_report.report.city }}</p>
+                <!-- Add other report details here if needed -->
+            </li>
+        {% endfor %}
+    </ul>
+    {% if assigned_reports %}
+    <form action="{{ worker_job_list_url }}">
+        <button type="submit" class="button">Confirm Job</button>
+    </form>
+    {% endif %}
+    <h2>Map</h2>
+    <div id="map" data-city="{{ user_city }}" style="height: 400px;"></div>
+    <!-- Include Leaflet and Leaflet Control Geocoder libraries -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- Include Leaflet Control Geocoder plugin -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <!-- Include your custom script file -->
+    <script src="{% static 'js/script_for_worker_job.js' %}"></script>
+    <script>
+        var userCity = "{{ user_city }}";
+        var assignedReports = {{ assigned_reports_data|safe }};
+    </script>
+{% endblock %}

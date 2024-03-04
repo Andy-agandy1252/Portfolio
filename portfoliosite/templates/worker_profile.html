@@ -1,0 +1,18 @@
+{% extends 'admin_base.html' %}
+
+{% block content %}
+<a href="{% url 'street_maintenance_admin' %}">Admin page</a>
+<a href="{% url 'worker_list' %}">Worker list</a>
+    <h1>Worker Profile</h1>
+    <p><strong>Name:</strong> {{ worker.user_profile.user.username }}</p>
+    <p><strong>Status:</strong> {{ worker.status }}</p>
+    <p><strong>City:</strong> {{ worker.user_profile.city }}</p>
+    <p><strong>Country:</strong> {{ worker.user_profile.country }}</p>
+
+    <h2>Change Status</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+{% endblock %}

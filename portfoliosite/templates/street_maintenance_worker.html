@@ -1,0 +1,19 @@
+<!-- street_maintenance_worker.html -->
+{% extends 'site_base.html' %}
+{% block content %}
+    <h1>Worker Panel</h1>
+    <h2>Worker Information</h2>
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>City:</strong> {{ user.userprofile.city }}</p>
+    <p><strong>Country:</strong> {{ user.userprofile.country }}</p>
+    <h2>Status: {{ user.userprofile.worker.status }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {% if user.userprofile.worker.status == 'available' %}
+            <button type="submit" class="btn btn-danger">Set Status to Sick</button>
+        {% endif %}
+    </form>
+    <form action="{% url 'worker_job' %}" method="get">
+        <button type="submit" class="btn btn-primary">Go to Worker Job Page</button>
+    </form>
+{% endblock %}

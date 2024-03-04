@@ -1,0 +1,78 @@
+{% extends 'site_base.html' %}
+{% block content %}
+{% load static %}
+
+<script src="{% static 'js/script_for_update_user_report.js' %}"></script>
+{% if request.user.is_superuser %}
+    <a href="{% url 'admin_report_list' %}">Admin Report List</a>
+{% else %}
+    <a href="{% url 'user_report_list' %}">Your report list</a>
+{% endif %}
+  <h1>Update Report</h1>
+  <!-- Display form for updating the report -->
+  <form method="post" action="{% url 'update_user_report' report.id %}" enctype="multipart/form-data" style="max-width: 600px; margin: auto;">
+    {% csrf_token %}
+    <div id="map" style="width: 600px; height: 400px;"></div>
+    <!-- Input field for street -->
+    <div style="margin-bottom: 15px;">
+      <label for="street">Street*:</label>
+      <input type="text" id="street" name="street" value="{{ report.street }}" style="width: 100%;" required>
+    </div>
+    <!-- Additional fields -->
+    <div style="margin-bottom: 15px;">
+      <label for="house_number">House Number:</label>
+      <input type="text" id="house_number" name="house_number" value="{{ report.house_number }}" style="width: 100%;">
+    </div>
+    <div style="margin-bottom: 15px;">
+      <label for="city">City*:</label>
+      <input type="text" id="city" name="city" value="{{ report.city }}" style="width: 100%;" required>
+    </div>
+    <div style="margin-bottom: 15px;">
+      <label for="zipcode">Zip Code:</label>
+      <input type="text" id="zipcode" name="zipcode" value="{{ report.zipcode }}" style="width: 100%;" required>
+    </div>
+    <div style="margin-bottom: 15px;">
+      <label for="region">Region:</label>
+      <input type="text" id="region" name="region" value="{{ report.region }}" style="width: 100%;" required>
+    </div>
+    <div style="margin-bottom: 15px;">
+      <label for="country">Country:</label>
+      <input type="text" id="country" name="country" value="{{ report.country }}" style="width: 100%;" required>
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="current_issue_type">Current Issue Type:</label>
+        <input type="text" id="current_issue_type" name="current_issue_type" value="{{ report.issue_type }}" readonly style="width: 100%;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="issue_type">New issue Type:</label>
+        <select id="issue_type" name="issue_type" style="width: 100%;">
+            <option value="garbage" >Garbage</option>
+            <option value="graffiti">Graffiti</option>
+            <option value="other">Other</option>
+        </select>
+    </div>
+
+    <button type="button" onclick="placeLocationManually()">Place Location on Map</button>
+    <button type="button" onclick="clearLocationInputs()">Clear Location Inputs</button>
+    <div style="margin-bottom: 15px;">
+      <label for="garbage_image">Garbage Image:</label>
+      <input type="file" id="garbage_image" name="garbage_image" accept="image/*" style="width: 100%;">
+    </div>
+    <div style="margin-bottom: 15px;">
+      <label for="street_image">Street Image:</label>
+      <input type="file" id="street_image" name="street_image" accept="image/*" style="width: 100%;">
+    </div>
+    <div style="margin-bottom: 15px;">
+      <label for="commentary">Commentary:</label>
+      <textarea id="commentary" name="commentary" rows="4" style="width: 100%;">{{ report.commentary }}</textarea>
+    </div>
+    <!-- Coordinates hidden input -->
+    <input type="hidden" id="coordinates" name="coordinates" value="{{ report.coordinates }}" style="width: 100%;" required>
+    <input type="hidden" id="status" name="status" value="queued" required>
+    <!-- Submit button -->
+    <div>
+      <input type="submit" value="Update Report" style="width: 100%;">
+    </div>
+  </form>
+
+{% endblock %}

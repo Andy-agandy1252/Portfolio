@@ -1,0 +1,48 @@
+<!-- report_detail.html -->
+{% extends 'site_base.html' %}
+
+{% block title %}Report Details{% endblock %}
+
+{% block content %}
+{% load static %}
+<script src="{% static 'js/script_for_report_detail.js' %}"></script>
+{% if request.user.is_superuser %}
+    <a href="{% url 'admin_report_list' %}">Admin Report List</a>
+{% else %}
+    <a href="{% url 'report_list' %}">Report listttttttttt</a>
+{% endif %}
+
+<h1>Report Details</h1>
+    <div>
+        <div style="margin-left: 100px;">
+            <strong>Reported Street:</strong>
+            {{ report.street }} {{ report.house_number }}<br>
+            {{ report.zipcode }} {{ report.city }}, {{ report.region }} ,{{ report.country }}<br>
+            <strong>Status:</strong>
+            {{ report.status }} {{ report.issue_type }}
+        </div>
+        <!-- Display the map with a marker for the reported location -->
+        <div style="display: flex; justify-content: center; padding: 100px;">
+            <!-- Display the map -->
+            <div style="flex: 1; margin-right: 10px;">
+                <div id="map" data-coordinates="{{ report.coordinates|default:'0,0' }}" style="width: 600px; height: 400px;"></div>
+
+            </div>
+            <!-- Display the commentary -->
+            <div style="flex: 1;">
+                <strong>Commentary:</strong><br>
+                {{ report.commentary }}
+            </div>
+        </div>
+        <div style="display: flex; justify-content: center; margin-bottom: 10px;">
+            <!-- Display the garbage image -->
+            {% if report.garbage_image %}
+                <img src="{{ report.garbage_image.url }}" alt="Garbage Image" style="width: 600px; height: 400px; margin: 0 5px;">
+            {% endif %}
+            <!-- Display the street image -->
+            {% if report.street_image %}
+                <img src="{{ report.street_image.url }}" alt="Street Image" style="width: 600px; height: 400px; margin: 0 5px;">
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

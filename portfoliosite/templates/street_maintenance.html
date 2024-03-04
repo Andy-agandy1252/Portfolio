@@ -1,0 +1,81 @@
+<!-- street_maintenance.html -->
+{% extends 'site_base.html' %}
+{% block title %}Street Maintenance{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<h1 style="margin-top:50px;">Make the streets clean again</h1>
+    {% if user.is_authenticated %}
+        <h2 style="text-align: center;">Seing the issue?</h2>
+        <div style="display: flex; justify-content: center;margin-top:-20px;">
+            <div style="margin:20px;">
+                <h2 style="text-align: center;" >Garbage</h2>
+               <a style="margin: auto;" href="{% url 'create_report' %}?issue_type=garbage"><img style="width: 280px;
+            height: 150px;" src="{% static 'images/garbage.jpg' %}" alt="Garbage"></a>
+            </div>
+            <div style="margin:20px;">
+                <h2 style="text-align: center;" >Graffiti</h2>
+                <a style="margin: auto;" href="{% url 'create_report' %}?issue_type=graffiti"><img style="width: 280px;
+            height: 150px;" src="{% static 'images/graffiti.jpg' %}" alt="Graffiti"></a>
+            </div>
+            <div style="margin:20px;">
+                <h2 style="text-align: center;" >Other</h2>
+                <a style="margin: auto;" href="{% url 'create_report' %}?issue_type=other"><img style="width: 280px;
+            height: 150px;" src="{% static 'images/bio.jpg' %}" alt="Other"></a>
+            </div>
+        </div>
+
+    {% else %}
+        <div style="display: flex; justify-content: space-between; margin:0 100px 0 100px ">
+            <div>
+                <h2 style="text-align: center;">Garbage</h2>
+               <img style="width: 500px;height: 250px;" src="{% static 'images/garbage.jpg' %}" alt="Garbage Image">
+            </div>
+            <div>
+                <h2 style="text-align: center;">Graffiti</h2>
+                <img style="width: 500px;height: 250px;" src="{% static 'images/graffiti.jpg' %}" alt="Graffiti Image">
+            </div>
+        </div>
+        <a href="{% url 'login' %}"><button>Report</button></a>
+    {% endif %}
+<script src="{% static 'js/script_for_report_list.js' %}"></script>
+{% if user.is_authenticated %}
+<h2 style="text-align: center;">Problems in your city:</h2>
+<div id="map" data-city="{{ profile.city }}" data-country="{{ profile.country }}"
+     style="width: 100%; height: 500px; margin-top: 50px;"></div>
+{% else %}
+<div style="display: flex; justify-content: center; align-items: center;">
+ <h1>See these problems in your :</h1>
+ <div>
+    <input type="text" id="searchCityInput" placeholder="Enter City Name" required>
+    <input type="text" id="searchCountryInput" placeholder="Enter Country Name" required>
+ </div>
+</div>
+<button onclick="searchCity()">Search City</button>
+<div id="map" style="width: 100%; height: 500px; margin-top: 50px;"></div>
+{% endif %}
+
+<div class="hidden-report-list" style="display: none;">
+{% for report in reports %}
+ <div class="report" data-coordinates="{{ report.coordinates }}" data-street="{{ report.street }}"
+      data-house-number="{{ report.house_number }}" data-city="{{ report.city }}" data-zipcode="{{ report.zipcode }}"
+      data-country="{{ report.country }}" data-issue-type="{{ report.issue_type }}"
+      data-url="{% url 'report_detail' report.id %}" data-status="{{ report.status }}"
+      style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0;">
+    <div style=" flex-grow: 2; margin-right: 10px;">
+      {{ report.street }} {{ report.house_number }}, {{ report.city }}, {{ report.zipcode }}, {{ report.country }}
+    </div>
+    <div style="flex-shrink: 0; margin-right: 10px; text-align: center;">
+      {{ report.status }}
+    </div>
+    <div style="flex-shrink: 0; display: flex; align-items: center; margin-top:-20px; margin-right:25px;">
+      <a href="{% url 'report_detail' report.id %}" style="margin-left: 5px; text-decoration: none;">
+        <button style="height: 25px; display: flex; align-items: center; justify-content: center;">Details</button>
+      </a>
+    </div>
+ </div>
+ <hr>
+{% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'site_base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+  <h1>User Registration</h1>
+  <form method="post" action="{% url 'register' %}">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    {{ profile_form.as_p }}
+
+  {% for field, errors in form.errors.items %}
+    <div class="error">{{ field }}: {{ errors.0 }}</div>
+  {% endfor %}
+
+    <button type="submit">Register</button>
+  </form>
+  <a href="{% url 'login' %}">Login</a>
+{% endblock %}
