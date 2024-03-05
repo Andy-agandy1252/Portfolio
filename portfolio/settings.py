@@ -19,16 +19,11 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['*']
-# CSRF_TRUSTED_ORIGINS = [
-#     'https://portfolio-dev-bjrj.2.ie-1.fl0.io',
-#     'https://andrejagarin.com',
-#     'https://*.andrejagarin.com',
-# ]
+ALLOWED_HOSTS = ['portfolio-dev-phfr.1.ie-1.fl0.io']
 
-# CSRF_TRUSTED_ORIGINS = [
-#     'https://portfolio-dev-mqzm.2.ie-1.fl0.io'
-# ]
+CSRF_TRUSTED_ORIGINS = [
+    'https://portfolio-dev-phfr.1.ie-1.fl0.io'
+]
 
 LOGIN_REDIRECT_URL = 'street_maintenance'  # Change this to your desired URL name
 
@@ -36,7 +31,6 @@ LOGIN_REDIRECT_URL = 'street_maintenance'  # Change this to your desired URL nam
 # Application definition
 
 INSTALLED_APPS = [
-    'django_cleanup.apps.CleanupConfig',
     'portfoliosite',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -44,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -80,7 +75,7 @@ WSGI_APPLICATION = 'portfolio.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -93,7 +88,7 @@ import dj_database_url
 DATABASES = {
     'default': dj_database_url.parse(env('DATABASE_URL'))
 }
-'''
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -133,15 +128,31 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
-
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_CUSTOM_DOMAIN = env('AWS_S3_CUSTOM_DOMAIN') % AWS_STORAGE_BUCKET_NAME
+AWS_S3_FILE_OVERWRITE = False
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+    }
+}
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+#
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
