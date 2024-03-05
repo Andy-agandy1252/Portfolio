@@ -16,7 +16,7 @@ environ.Env.read_env()
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 ALLOWED_HOSTS = ['portfolio-dev-phfr.1.ie-1.fl0.io']
